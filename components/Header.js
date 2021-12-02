@@ -10,7 +10,7 @@ export default function Header() {
             </Link>
 
             <div className='flex item-center'>
-                <Link href='/login'>
+                <Link href='/_login'>
                     <a className='bg-red-500 px-5 py-3 rounded-lg text-white font-bold uppercase mr-2'>
                         Iniciar Sesión
                     </a>
