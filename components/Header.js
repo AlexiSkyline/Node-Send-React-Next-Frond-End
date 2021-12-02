@@ -16,7 +16,7 @@ export default function Header() {
                     </a>
                 </Link>
 
-                <Link href='/crearcuenta'>
+                <Link href='/_crearcuenta'>
                     <a className='bg-black px-5 py-3 rounded-lg text-white font-bold uppercase'>
                         Crear Cuenta
                     </a>
