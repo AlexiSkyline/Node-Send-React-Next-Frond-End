@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 export default function CrearCuenta() {
-
     // * Fomulario y validación con formik y Yup
     const formik = useFormik({
         initialValues: {
