@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Layout from '../components/Layout';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { authContext } from '../context/auth/authContext';
 
 export default function CrearCuenta() {
+    // Todo: Acceder al state
+    const AuthContext = useContext( authContext );
+    const { registrarUsuario } = AuthContext;
+
     // * Fomulario y validación con formik y Yup
     const formik = useFormik({
         initialValues: {
@@ -17,7 +22,7 @@ export default function CrearCuenta() {
             password: Yup.string().required( 'El password no puede ir vacio' ).min( 6, 'La contraseña debe de contener al menos 6 caracteres' )
         }),
         onSubmit: ( value ) => {
-            console.log( value );
+            registrarUsuario( value );
         }
     });
 
