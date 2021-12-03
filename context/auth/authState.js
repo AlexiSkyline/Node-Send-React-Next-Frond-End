@@ -3,7 +3,9 @@ import { clienteAxios } from '../../config/axios';
 import { authContext } from './authContext';
 import authReducer from './authReducer';
 
-import { REGISTRO_EXITOSO } from '../../types';
+import { LIMPIAR_ALERTA, 
+         REGISTRO_ERROR, 
+         REGISTRO_EXITOSO } from '../../types';
 
 export const AuthState = ( props ) => {
 
@@ -22,10 +24,23 @@ export const AuthState = ( props ) => {
         try {
            const respuesta = await clienteAxios.post( '/api/usuarios', datos );
            
-           
+           dispatch({
+                type: REGISTRO_EXITOSO,
+                payload: respuesta.data.msg
+           });
         } catch (error) {
-            console.log( error );
+            dispatch({
+                type: REGISTRO_ERROR,
+                payload: error.response.data.msg
+            });
         }
+
+        //* Limpiar alerta despues de 3 Segundos
+        setTimeout(() => {
+            dispatch({
+                type: LIMPIAR_ALERTA
+            });
+         }, 3000);
     }
     
     return (
