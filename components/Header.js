@@ -5,7 +5,7 @@ import { authContext } from '../context/auth/authContext';
 export default function Header() {
     // Todo: Extrae el usuario autenticado del Storage
     const AuthContext = useContext( authContext  );  
-    const { usuario, usuarioAutenticado } = AuthContext;
+    const { usuario, usuarioAutenticado,cerrarSesion } = AuthContext;
 
     useEffect(() => {
         usuarioAutenticado();
@@ -21,7 +21,19 @@ export default function Header() {
             <div className='flex item-center'>
                 {
                     usuario ? 
-                    ( <p>Hola { usuario.nombre }</p>) :
+                    ( 
+                        <div className='flex items-center'>
+                            <p>Hola { usuario.nombre }</p>
+                            <button
+                                type='button'
+                                className='bg-black px-5 py-3 rounded-lg text-white font-bold uppercase'
+                                onClick={ () => cerrarSesion() }
+                            >
+                                Cerrar Sesión
+                            </button>
+                        </div>
+                    ) 
+                        :
                     (
                         <>
                             <Link href='/_login'>

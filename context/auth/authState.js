@@ -2,12 +2,13 @@ import React, { useReducer } from 'react';
 import { authContext } from './authContext';
 import authReducer from './authReducer';
 
-import { LIMPIAR_ALERTA, 
+import { CERRAR_SESION, 
+         LIMPIAR_ALERTA, 
          LOGIN_ERROR, 
          LOGIN_EXITOSO, 
          REGISTRO_ERROR, 
          REGISTRO_EXITOSO, 
-         USUARIO_AUTENTICADO} from '../../types';
+         USUARIO_AUTENTICADO } from '../../types';
 
 import { tokenAuth } from '../../config/tokenAuth';
 import { clienteAxios } from '../../config/axios';
@@ -92,6 +93,13 @@ export const AuthState = ( props ) => {
         }
     }
     
+    // Todo: Cerrar Sesión
+    const cerrarSesion = () => {
+        dispatch({
+            type: CERRAR_SESION
+        })
+    }
+
     return (
         <authContext.Provider
             value={{
@@ -101,7 +109,8 @@ export const AuthState = ( props ) => {
                 mensaje: state.mensaje,
                 registrarUsuario,
                 iniciarSesion,
-                usuarioAutenticado
+                usuarioAutenticado,
+                cerrarSesion
             }}
         >
             { props.children }

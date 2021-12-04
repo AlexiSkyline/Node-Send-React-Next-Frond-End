@@ -3,7 +3,8 @@ import { LIMPIAR_ALERTA,
          REGISTRO_EXITOSO,
          LOGIN_ERROR, 
          LOGIN_EXITOSO,
-         USUARIO_AUTENTICADO } from '../../types';
+         USUARIO_AUTENTICADO, 
+         CERRAR_SESION} from '../../types';
 
 export default function authReducer( state, action ) {
     switch( action.type ) {
@@ -30,6 +31,14 @@ export default function authReducer( state, action ) {
             return {
                 ...state,
                 usuario: action.payload
+            }
+        case CERRAR_SESION:
+            localStorage.removeItem( 'token' );
+            return {
+                ...state,
+                usuario: null,
+                token: null,
+                autenticado: null
             }
         default:
             return state;
