@@ -1,5 +1,4 @@
 import React, { useReducer } from 'react';
-import { clienteAxios } from '../../config/axios';
 import { authContext } from './authContext';
 import authReducer from './authReducer';
 
@@ -7,7 +6,11 @@ import { LIMPIAR_ALERTA,
          LOGIN_ERROR, 
          LOGIN_EXITOSO, 
          REGISTRO_ERROR, 
-         REGISTRO_EXITOSO } from '../../types';
+         REGISTRO_EXITOSO, 
+         USUARIO_AUTENTICADO} from '../../types';
+
+import { tokenAuth } from '../../config/tokenAuth';
+import { clienteAxios } from '../../config/axios';
 
 export const AuthState = ( props ) => {
 
@@ -67,6 +70,27 @@ export const AuthState = ( props ) => {
             });
         }, 3000);
     }
+
+    // Todo: nos regresa el usuario autenticado por el jwt
+    const usuarioAutenticado = async () => {
+        const token = localStorage.getItem( 'token' );
+        if( token ) {
+            tokenAuth( token );
+        }
+
+        try {
+            const respuesta = await clienteAxios.get( '/api/auth' );
+            dispatch({
+                type: USUARIO_AUTENTICADO,
+                payload: respuesta.data.usuario
+            })
+        } catch (error) {
+            dispatch({
+                type: LOGIN_ERROR,
+                payload: error.response.data.msg 
+            });
+        }
+    }
     
     return (
         <authContext.Provider
@@ -76,7 +100,8 @@ export const AuthState = ( props ) => {
                 usuario: state.usuario,
                 mensaje: state.mensaje,
                 registrarUsuario,
-                iniciarSesion
+                iniciarSesion,
+                usuarioAutenticado
             }}
         >
             { props.children }

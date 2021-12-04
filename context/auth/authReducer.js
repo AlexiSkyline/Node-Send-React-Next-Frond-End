@@ -2,7 +2,8 @@ import { LIMPIAR_ALERTA,
          REGISTRO_ERROR, 
          REGISTRO_EXITOSO,
          LOGIN_ERROR, 
-         LOGIN_EXITOSO} from '../../types';
+         LOGIN_EXITOSO,
+         USUARIO_AUTENTICADO } from '../../types';
 
 export default function authReducer( state, action ) {
     switch( action.type ) {
@@ -24,6 +25,11 @@ export default function authReducer( state, action ) {
             return {
                 ...state,
                 mensaje: null
+            }
+        case USUARIO_AUTENTICADO:
+            return {
+                ...state,
+                usuario: action.payload
             }
         default:
             return state;

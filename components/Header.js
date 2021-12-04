@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
+import { authContext } from '../context/auth/authContext';
 
 export default function Header() {
+    // Todo: Extrae el usuario autenticado del Storage
+    const AuthContext = useContext( authContext  );  
+    const { usuario, usuarioAutenticado } = AuthContext;
+
+    useEffect(() => {
+        usuarioAutenticado();
+    }, []);
+
     return (
         <header className='py-8 flex flex-col md:flex-row item-center justify-between'>
             <Link href='/' passHref>
@@ -10,17 +19,25 @@ export default function Header() {
             </Link>
 
             <div className='flex item-center'>
-                <Link href='/_login'>
-                    <a className='bg-red-500 px-5 py-3 rounded-lg text-white font-bold uppercase mr-2'>
-                        Iniciar Sesión
-                    </a>
-                </Link>
+                {
+                    usuario ? 
+                    ( <p>Hola { usuario.nombre }</p>) :
+                    (
+                        <>
+                            <Link href='/_login'>
+                                <a className='bg-red-500 px-5 py-3 rounded-lg text-white font-bold uppercase mr-2'>
+                                    Iniciar Sesión
+                                </a>
+                            </Link>
 
-                <Link href='/_crearcuenta'>
-                    <a className='bg-black px-5 py-3 rounded-lg text-white font-bold uppercase'>
-                        Crear Cuenta
-                    </a>
-                </Link>
+                            <Link href='/_crearcuenta'>
+                                <a className='bg-black px-5 py-3 rounded-lg text-white font-bold uppercase'>
+                                    Crear Cuenta
+                                </a>
+                            </Link>
+                        </>
+                    )
+                }
             </div>
         </header>
     );
