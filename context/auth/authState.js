@@ -4,6 +4,8 @@ import { authContext } from './authContext';
 import authReducer from './authReducer';
 
 import { LIMPIAR_ALERTA, 
+         LOGIN_ERROR, 
+         LOGIN_EXITOSO, 
          REGISTRO_ERROR, 
          REGISTRO_EXITOSO } from '../../types';
 
@@ -11,7 +13,7 @@ export const AuthState = ( props ) => {
 
     // * Definir un state inicial
     const initialState = {
-        token: '',
+        token: ( typeof window !== 'undefined' ) ? localStorage.getItem( 'token' ) : '',
         autenticado: null,
         usuario: null,
         mensaje: null
@@ -40,7 +42,30 @@ export const AuthState = ( props ) => {
             dispatch({
                 type: LIMPIAR_ALERTA
             });
-         }, 3000);
+        }, 3000);
+    }
+
+    // Todo: Autenticar Usuario
+    const iniciarSesion = async ( datos ) => {
+        try {
+            const respuesta = await clienteAxios.post( '/api/auth', datos );
+            dispatch({
+                type: LOGIN_EXITOSO,
+                payload: respuesta.data.token
+            });
+        } catch (error) {
+            dispatch({
+                type: LOGIN_ERROR,
+                payload: error.response.data.msg 
+            });
+        }
+
+        //* Limpiar alerta despues de 3 Segundos
+        setTimeout(() => {
+            dispatch({
+                type: LIMPIAR_ALERTA
+            });
+        }, 3000);
     }
     
     return (
@@ -50,7 +75,8 @@ export const AuthState = ( props ) => {
                 autenticado: state.autenticado,
                 usuario: state.usuario,
                 mensaje: state.mensaje,
-                registrarUsuario
+                registrarUsuario,
+                iniciarSesion
             }}
         >
             { props.children }

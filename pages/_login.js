@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { authContext } from '../context/auth/authContext';
+import { Alerta } from '../components/Alerta';
+import { useRouter } from 'next/router';
 
 export default function CrearCuenta() {
+
+    const AuthContext = useContext( authContext );
+    const { mensaje, autenticado, iniciarSesion } = AuthContext;
+
+    const router = useRouter();
+
+    useEffect(() => {
+        if( autenticado ) {
+            router.push( '/' );
+        }
+    }, [autenticado]);
+
     // * Fomulario y validación con formik y Yup
     const formik = useFormik({
         initialValues: {
@@ -15,7 +30,7 @@ export default function CrearCuenta() {
             password: Yup.string().required( 'El password no puede ir vacio' )
         }),
         onSubmit: ( value ) => {
-            console.log( value ); 
+            iniciarSesion( value ); 
         }
     });
 
@@ -23,6 +38,8 @@ export default function CrearCuenta() {
         <Layout>
             <div className='md:w-4/5 xl:w-3/5 mx-auto mb-32'>
                 <h2 className='text-4xl font-sans font-bold text-gray-800 text-center my-4'>Iniciar Sesión</h2>
+
+                { mensaje && <Alerta />}
 
                 <div className='flex justify-center mt-5'>
                     <div className='w-full max-w-lg'>
