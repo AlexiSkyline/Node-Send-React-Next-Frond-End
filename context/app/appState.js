@@ -5,15 +5,20 @@ import { OCULTAR_ALERTA,
          MOSTRAR_ALERTA, 
          SUBIR_ARCHIVO_EXITO, 
          SUBIR_ARCHIVO_ERROR, 
-         SUBIR_ARCHIVO } from '../../types';
+         SUBIR_ARCHIVO, 
+         CREAR_ENLACE_EXITO} from '../../types';
 import { clienteAxios } from '../../config/axios';
 
 export const AppState = ( props ) => {
     const initialState = {
         mensajeArchivo: null,
         nombre: '',
-        nombre_original: '',
-        cargando: null
+        nombreOriginal: '',
+        cargando: null,
+        descargas: 1,
+        password: '',
+        autor: null,
+        url: ''
     }
 
     const [ state, dispatch ] = useReducer( appReducer, initialState );
@@ -47,7 +52,7 @@ export const AppState = ( props ) => {
                 type: SUBIR_ARCHIVO_EXITO,
                 payload: {
                     nombre: respuesta.data.archivos,
-                    nombre_original: nombreArchivo
+                    nombreOriginal: nombreArchivo
                 }
             });
         } catch (error) {
@@ -58,15 +63,42 @@ export const AppState = ( props ) => {
         }
     }
 
+    // Todo: Crea un enlace una vez que se haya subidó el archivo
+    const crearEnlace = async () => {
+        const data = {
+            nombre: state.nombre,
+            nombre_original: state.nombreOriginal,
+            descargas: state.descargas,
+            password: state.password,
+            autor: state.autor
+        }
+
+        try {
+            const respuesta = await clienteAxios.post( '/api/enlaces', data );
+            
+            dispatch({
+                type: CREAR_ENLACE_EXITO,
+                payload: respuesta.data.msg
+            });
+        } catch (error) {
+            
+        }
+    }
+
     return (
         <appContext.Provider
             value={{
                 mensajeArchivo: state.mensajeArchivo,
                 nombre: state.nombre,
-                nombre_original: state.nombre_original,
+                nombreOriginal: state.nombreOriginal,
                 cargando: state.cargando,
+                descargas: state.descargas,
+                password: state.password,
+                autor: state.autor,
+                url: state.url,
                 mostrarAlerta,
-                subirArchivos
+                subirArchivos,
+                crearEnlace
             }}
         >
             { props.children}

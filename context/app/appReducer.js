@@ -2,7 +2,8 @@ import { OCULTAR_ALERTA,
          MOSTRAR_ALERTA, 
          SUBIR_ARCHIVO_EXITO, 
          SUBIR_ARCHIVO_ERROR, 
-         SUBIR_ARCHIVO} from '../../types';
+         SUBIR_ARCHIVO,
+         CREAR_ENLACE_EXITO} from '../../types';
 
 export default function appReducer( state, action ) {
     switch( action.type ) {
@@ -25,7 +26,7 @@ export default function appReducer( state, action ) {
             return {
                 ...state,
                 nombre: action.payload.nombre,
-                nombre_original: action.payload.nombre_original,
+                nombreOriginal: action.payload.nombreOriginal,
                 cargando: null
             }
         case SUBIR_ARCHIVO_ERROR:
@@ -33,6 +34,11 @@ export default function appReducer( state, action ) {
                 ...state,
                 mensajeArchivo: action.payload,
                 cargando: null
+            }
+        case CREAR_ENLACE_EXITO:
+            return {
+                ...state,
+                url: action.payload
             }
         default: 
             return state;

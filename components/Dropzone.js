@@ -5,7 +5,7 @@ import { appContext } from '../context/app/appContext';
 
 export const Dropzone = () => {
     const AppContext = useContext( appContext );
-    const { cargando, mostrarAlerta, subirArchivos } = AppContext;
+    const { cargando, mostrarAlerta, subirArchivos, crearEnlace } = AppContext;
 
     const onDropRejected = () => {
         mostrarAlerta( 'No se pudo subir, el limite es 1MB, obten una cuenta gratis para subir archivos más grandes.' );
@@ -28,10 +28,6 @@ export const Dropzone = () => {
             <p className='text-sm text-gray-500'>{ (archivo.size / Math.pow( 1024, 2 )).toFixed(2) } MB</p>
         </li>
     ));
-
-    const crearEnlace = () => {
-
-    }
 
     return (
         <div className='md:flex-1 mb-3 mx-2 mt-16 lg:mt-0 flex flex-col items-center justify-center border-dashed border-gray-400 border-2 bg-gray-100 px-4'>
