@@ -5,7 +5,7 @@ import { appContext } from '../context/app/appContext';
 
 export const Dropzone = () => {
     const AppContext = useContext( appContext );
-    const { mostrarAlerta } = AppContext;
+    const { cargando, mostrarAlerta, subirArchivos } = AppContext;
 
     const onDropRejected = () => {
         mostrarAlerta( 'No se pudo subir, el limite es 1MB, obten una cuenta gratis para subir archivos más grandes.' );
@@ -16,7 +16,7 @@ export const Dropzone = () => {
         const formData = new FormData();
         formData.append( 'archivo', acceptedFiles[0] );
 
-        const resultado = await clienteAxios.post( '/api/archivos', formData );
+        subirArchivos( formData, acceptedFiles[0].path );
     }, []);
 
     // Todo: Extre contenido de dropzone
@@ -46,13 +46,23 @@ export const Dropzone = () => {
                             { archivos }
                         </ul>
 
-                        <button
-                            type='button'
-                            className='bg-blue-700 w-full py-3 rounded-lg text-white my-10 hover:bg-blue-800'
-                            onClick={ () => crearEnlace() }
-                        >
-                            Crear Enlace
-                        </button>
+                        {
+                            cargando ? 
+                            (
+                                <p className='my-10 text-center text-gray-600'>Subiendo Archivo....</p>
+                            )
+                             : 
+                            (
+                                <button
+                                    type='button'
+                                    className='bg-blue-700 w-full py-3 rounded-lg text-white my-10 hover:bg-blue-800'
+                                    onClick={ () => crearEnlace() }
+                                >
+                                    Crear Enlace
+                                </button>
+                            )
+                        }
+                        
                    </div>
                 )
                     :
