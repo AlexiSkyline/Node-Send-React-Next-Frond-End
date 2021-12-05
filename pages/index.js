@@ -11,6 +11,7 @@ export default function Home() {
     useEffect(() => {
         usuarioAutenticado();
     }, []);
+    
     return (
         <Layout>
             <div className='md:w-4/5 xl:w-3/5 mx-auto mb-32'>
