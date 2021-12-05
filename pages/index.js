@@ -1,12 +1,19 @@
 import React,{ useContext, useEffect } from 'react';
 import Layout from '../components/Layout';
-import Link from 'next/link';
+import { Alerta } from '../components/Alerta';
 import { Dropzone } from '../components/Dropzone';
+import Link from 'next/link';
 import { authContext } from '../context/auth/authContext';
+import { appContext } from '../context/app/appContext';
 
 export default function Home() {
+    // Todo: Extrae el usuario autentucado del Storage
     const AuthContext = useContext( authContext  );  
     const { usuarioAutenticado } = AuthContext;
+
+    // Todo: Extrae el mensaje del archivo
+    const AppContext = useContext( appContext );
+    const { mensajeArchivo } = AppContext;
 
     useEffect(() => {
         usuarioAutenticado();
@@ -15,6 +22,11 @@ export default function Home() {
     return (
         <Layout>
             <div className='md:w-4/5 xl:w-3/5 mx-auto mb-32'>
+
+                {
+                    mensajeArchivo && <Alerta />
+                }
+
                 <div className='lg:flex md:shadow-lg p-5 bg-white rounded-lg py-10'>
                     <Dropzone />
 

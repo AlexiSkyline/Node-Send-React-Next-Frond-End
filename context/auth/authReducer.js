@@ -1,4 +1,4 @@
-import { LIMPIAR_ALERTA, 
+import { OCULTAR_ALERTA, 
          REGISTRO_ERROR, 
          REGISTRO_EXITOSO,
          LOGIN_ERROR, 
@@ -22,7 +22,7 @@ export default function authReducer( state, action ) {
                 token: action.payload,
                 autenticado: true
             }
-        case LIMPIAR_ALERTA:
+        case OCULTAR_ALERTA:
             return {
                 ...state,
                 mensaje: null

@@ -3,7 +3,7 @@ import { authContext } from './authContext';
 import authReducer from './authReducer';
 
 import { CERRAR_SESION, 
-         LIMPIAR_ALERTA, 
+         OCULTAR_ALERTA, 
          LOGIN_ERROR, 
          LOGIN_EXITOSO, 
          REGISTRO_ERROR, 
@@ -44,7 +44,7 @@ export const AuthState = ( props ) => {
         //* Limpiar alerta despues de 3 Segundos
         setTimeout(() => {
             dispatch({
-                type: LIMPIAR_ALERTA
+                type: OCULTAR_ALERTA
             });
         }, 3000);
     }
@@ -67,7 +67,7 @@ export const AuthState = ( props ) => {
         //* Limpiar alerta despues de 3 Segundos
         setTimeout(() => {
             dispatch({
-                type: LIMPIAR_ALERTA
+                type: OCULTAR_ALERTA
             });
         }, 3000);
     }
