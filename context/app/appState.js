@@ -7,7 +7,8 @@ import { OCULTAR_ALERTA,
          SUBIR_ARCHIVO_ERROR, 
          SUBIR_ARCHIVO, 
          CREAR_ENLACE_EXITO,
-         LIMPIAR_STATE} from '../../types';
+         LIMPIAR_STATE,
+         AGREGAR_PASSWORD} from '../../types';
 import { clienteAxios } from '../../config/axios';
 
 export const AppState = ( props ) => {
@@ -93,6 +94,14 @@ export const AppState = ( props ) => {
         });
     }
 
+    // Todo: Agrega una contraseña al state
+    const agregarPassword = ( password ) => {
+        dispatch({
+            type: AGREGAR_PASSWORD,
+            payload: password
+        })
+    }
+
     return (
         <appContext.Provider
             value={{
@@ -107,10 +116,11 @@ export const AppState = ( props ) => {
                 mostrarAlerta,
                 subirArchivos,
                 crearEnlace,
-                limpiarState
+                limpiarState,
+                agregarPassword,
             }}
         >
-            { props.children}
+            { props.children }
         </appContext.Provider>
     );
 }

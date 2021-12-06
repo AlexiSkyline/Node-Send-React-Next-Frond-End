@@ -4,7 +4,8 @@ import { OCULTAR_ALERTA,
          SUBIR_ARCHIVO_ERROR, 
          SUBIR_ARCHIVO,
          CREAR_ENLACE_EXITO,
-         LIMPIAR_STATE} from '../../types';
+         LIMPIAR_STATE,
+         AGREGAR_PASSWORD} from '../../types';
 
 export default function appReducer( state, action ) {
     switch( action.type ) {
@@ -52,6 +53,11 @@ export default function appReducer( state, action ) {
                 password: '',
                 autor: null,
                 url: ''
+            }
+        case AGREGAR_PASSWORD:
+            return {
+                ...state,
+                password: action.payload
             }
         default: 
             return state;
