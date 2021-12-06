@@ -6,7 +6,8 @@ import { OCULTAR_ALERTA,
          SUBIR_ARCHIVO_EXITO, 
          SUBIR_ARCHIVO_ERROR, 
          SUBIR_ARCHIVO, 
-         CREAR_ENLACE_EXITO} from '../../types';
+         CREAR_ENLACE_EXITO,
+         LIMPIAR_STATE} from '../../types';
 import { clienteAxios } from '../../config/axios';
 
 export const AppState = ( props ) => {
@@ -85,6 +86,13 @@ export const AppState = ( props ) => {
         }
     }
 
+    // Todo: Reinicia el state
+    const limpiarState = () => {
+        dispatch({
+            type: LIMPIAR_STATE
+        });
+    }
+
     return (
         <appContext.Provider
             value={{
@@ -98,7 +106,8 @@ export const AppState = ( props ) => {
                 url: state.url,
                 mostrarAlerta,
                 subirArchivos,
-                crearEnlace
+                crearEnlace,
+                limpiarState
             }}
         >
             { props.children}

@@ -3,7 +3,8 @@ import { OCULTAR_ALERTA,
          SUBIR_ARCHIVO_EXITO, 
          SUBIR_ARCHIVO_ERROR, 
          SUBIR_ARCHIVO,
-         CREAR_ENLACE_EXITO} from '../../types';
+         CREAR_ENLACE_EXITO,
+         LIMPIAR_STATE} from '../../types';
 
 export default function appReducer( state, action ) {
     switch( action.type ) {
@@ -39,6 +40,18 @@ export default function appReducer( state, action ) {
             return {
                 ...state,
                 url: action.payload
+            }
+        case LIMPIAR_STATE:
+            return {
+                ...state,
+                mensajeArchivo: null,
+                nombre: '',
+                nombreOriginal: '',
+                cargando: null,
+                descargas: 1,
+                password: '',
+                autor: null,
+                url: ''
             }
         default: 
             return state;
