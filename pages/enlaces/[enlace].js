@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { Alerta } from '../../components/Alerta';
 import Layout from '../../components/Layout';
 import { clienteAxios } from '../../config/axios';
+import { appContext } from '../../context/app/appContext';
 
 export async function getServerSideProps({ params }) {
     const { enlace } = params;
@@ -25,12 +27,24 @@ export async function getServerSidePaths() {
 }
 
 export default function enlaces({ enlace }) {
-    const [ tienePassword, setTienePassword ] = useState( enlace.password );
+    const AppContext = useContext( appContext );
+    const { mensajeArchivo, hasPassword, verificarPassword } = AppContext;
 
-    const verificarPassword = ( e ) => {
+    const [ tienePassword, setTienePassword ] = useState( enlace.password );
+    const [ password, setPassword ] = useState('');
+
+    const obtenerPassword = ( e ) => {
         e.preventDefault();
-        console.log( 'Verdicando.....' );
+        const data = { password }
+
+        verificarPassword( enlace.enlace, data );
     }
+
+    useEffect(() => {
+        if( hasPassword == false ) {
+            setTienePassword( false );
+        }
+    }, [hasPassword]);
 
     return (
         <Layout>
@@ -39,11 +53,14 @@ export default function enlaces({ enlace }) {
                (
                     <>
                         <p className='text-center'>Este enlace esta protegido por un password, colocalo a continuación</p>
+
+                        { mensajeArchivo && <Alerta /> }
+
                         <div className='flex justify-center mt-5'>
                             <div className='w-full max-w-lg'>
                                 <form
                                     className='bg-white rounded shadow-md px-8 pt-6 pb-8 mb-4'
-                                    onSubmit={ e => verificarPassword( e ) }
+                                    onSubmit={ e => obtenerPassword( e ) }
                                 >
                                     <div className='mb-4'>
                                         <label 
@@ -57,6 +74,8 @@ export default function enlaces({ enlace }) {
                                             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                                             id='password'
                                             placeholder='Ingrese el password del enlace'     
+                                            value={ password }
+                                            onChange={ e => setPassword( e.target.value ) }
                                         />
                                     </div> 
 

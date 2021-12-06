@@ -134,5 +134,5 @@ export default function CrearCuenta() {
                 </div>
             </div>
         </Layout>
-    )
+    );
 }

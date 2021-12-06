@@ -9,7 +9,9 @@ import { OCULTAR_ALERTA,
          CREAR_ENLACE_EXITO,
          LIMPIAR_STATE,
          AGREGAR_PASSWORD,
-         AGREGAR_DESCARGAS} from '../../types';
+         AGREGAR_DESCARGAS,
+         VERIFICAR_PASSWORD } from '../../types';
+
 import { clienteAxios } from '../../config/axios';
 
 export const AppState = ( props ) => {
@@ -21,7 +23,8 @@ export const AppState = ( props ) => {
         descargas: 1,
         password: '',
         autor: null,
-        url: ''
+        url: '',
+        hasPassword: null
     }
 
     const [ state, dispatch ] = useReducer( appReducer, initialState );
@@ -84,7 +87,7 @@ export const AppState = ( props ) => {
                 payload: respuesta.data.msg
             });
         } catch (error) {
-            
+            mostrarAlerta( error.response.data.msg );
         }
     }
 
@@ -111,6 +114,18 @@ export const AppState = ( props ) => {
         });
     }
 
+    const verificarPassword = async ( enlace, data ) => {
+        try {
+            const resultado = await clienteAxios.post( `/api/enlaces/${ enlace }`, data );
+            dispatch({
+                type: VERIFICAR_PASSWORD,
+                payload: resultado.data.password
+            });
+        } catch (error) {
+            mostrarAlerta( error.response.data.msg );
+        }
+    }
+
     return (
         <appContext.Provider
             value={{
@@ -122,12 +137,14 @@ export const AppState = ( props ) => {
                 password: state.password,
                 autor: state.autor,
                 url: state.url,
+                hasPassword: state.hasPassword,
                 mostrarAlerta,
                 subirArchivos,
                 crearEnlace,
                 limpiarState,
                 agregarPassword,
-                agregarDescargas
+                agregarDescargas,
+                verificarPassword,
             }}
         >
             { props.children }

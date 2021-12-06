@@ -7,4 +7,3 @@ export const tokenAuth = ( token ) => {
         delete clienteAxios.defaults.headers.common['Authorization'];
     }
 }
-

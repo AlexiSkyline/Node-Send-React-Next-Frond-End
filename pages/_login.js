@@ -7,7 +7,6 @@ import { Alerta } from '../components/Alerta';
 import { useRouter } from 'next/router';
 
 export default function CrearCuenta() {
-
     const AuthContext = useContext( authContext );
     const { mensaje, autenticado, iniciarSesion } = AuthContext;
 

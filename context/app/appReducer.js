@@ -6,7 +6,8 @@ import { OCULTAR_ALERTA,
          CREAR_ENLACE_EXITO,
          LIMPIAR_STATE,
          AGREGAR_PASSWORD,
-         AGREGAR_DESCARGAS} from '../../types';
+         AGREGAR_DESCARGAS,
+         VERIFICAR_PASSWORD } from '../../types';
 
 export default function appReducer( state, action ) {
     switch( action.type ) {
@@ -53,7 +54,8 @@ export default function appReducer( state, action ) {
                 descargas: 1,
                 password: '',
                 autor: null,
-                url: ''
+                url: '',
+                hasPassword: null
             }
         case AGREGAR_PASSWORD:
             return {
@@ -64,6 +66,11 @@ export default function appReducer( state, action ) {
             return {
                 ...state,
                 descargas: action.payload
+            }
+        case VERIFICAR_PASSWORD:
+            return {
+                ...state,
+                hasPassword: action.payload
             }
         default: 
             return state;

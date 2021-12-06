@@ -4,7 +4,6 @@ import { appContext } from '../context/app/appContext';
 export const Formulario = () => {
     const AppContext = useContext( appContext );
     const { agregarPassword, agregarDescargas } = AppContext;
-
     const [ tienePassword, setTienePassword ] = useState(false);
 
     return (
