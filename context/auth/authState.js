@@ -81,10 +81,13 @@ export const AuthState = ( props ) => {
 
         try {
             const respuesta = await clienteAxios.get( '/api/auth' );
-            dispatch({
-                type: USUARIO_AUTENTICADO,
-                payload: respuesta.data.usuario
-            })
+            
+            if( respuesta.data.usuario ) {
+                dispatch({
+                    type: USUARIO_AUTENTICADO,
+                    payload: respuesta.data.usuario
+                });
+            }
         } catch (error) {
             dispatch({
                 type: LOGIN_ERROR,
