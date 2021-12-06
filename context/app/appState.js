@@ -8,7 +8,8 @@ import { OCULTAR_ALERTA,
          SUBIR_ARCHIVO, 
          CREAR_ENLACE_EXITO,
          LIMPIAR_STATE,
-         AGREGAR_PASSWORD} from '../../types';
+         AGREGAR_PASSWORD,
+         AGREGAR_DESCARGAS} from '../../types';
 import { clienteAxios } from '../../config/axios';
 
 export const AppState = ( props ) => {
@@ -102,6 +103,14 @@ export const AppState = ( props ) => {
         })
     }
 
+    // Todo: Agrega un número de descargas
+    const agregarDescargas = ( descargas ) => {
+        dispatch({
+            type: AGREGAR_DESCARGAS,
+            payload: descargas
+        });
+    }
+
     return (
         <appContext.Provider
             value={{
@@ -118,6 +127,7 @@ export const AppState = ( props ) => {
                 crearEnlace,
                 limpiarState,
                 agregarPassword,
+                agregarDescargas
             }}
         >
             { props.children }

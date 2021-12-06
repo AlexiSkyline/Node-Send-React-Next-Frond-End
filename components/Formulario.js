@@ -3,7 +3,7 @@ import { appContext } from '../context/app/appContext';
 
 export const Formulario = () => {
     const AppContext = useContext( appContext );
-    const { agregarPassword } = AppContext;
+    const { agregarPassword, agregarDescargas } = AppContext;
 
     const [ tienePassword, setTienePassword ] = useState(false);
 
@@ -11,7 +11,10 @@ export const Formulario = () => {
         <div className='w-full mt-10'>
             <div>
                 <label className='text-lg text-gray-800'>Eliminar tras:</label>
-                <select className='appearance-none w-full mt-2 bg-white border border-gray-400 text-black py-3 px-4 pr-8 rounded leading-none focus:outline-none focus:border-gray-500'>
+                <select 
+                    className='appearance-none w-full mt-2 bg-white border border-gray-400 text-black py-3 px-4 pr-8 rounded leading-none focus:outline-none focus:border-gray-500'
+                    onChange={ e => agregarDescargas( parseInt( e.target.value ) ) }
+                >
                     <option value='' selected disabled>-- Seleccione --</option>
                     <option value='1'>1 Descargas</option>
                     <option value='5'>5 Descargas</option>
